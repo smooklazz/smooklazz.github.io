@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/icon/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/icon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#809da3">
+  <meta name="author" content="汪先森">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="代理模式一、静态代理三类角色 抽象角色：定义代理角色和公共角色的公共对外方法 真实角色：实现抽象角色，定义真是角色所要实现的业务逻辑供代理角色调用，&#x3D;&#x3D;关注真正地业务逻辑&#x3D;&#x3D; 代理角色：实现抽象角色，是真实角色的代理，通过真是角色的业务逻辑方法来实现抽象方法，并附加自己的操作。&#x3D;&#x3D;将统一的流程放到代理中处理&#x3D;&#x3D;代码 抽象角色  1234567public interface Star &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java设计模式-代理模式详解">
+<meta property="og:url" content="https://smooklazz.github.io/2022/04/21/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="汪先森的小站">
+<meta property="og:description" content="代理模式一、静态代理三类角色 抽象角色：定义代理角色和公共角色的公共对外方法 真实角色：实现抽象角色，定义真是角色所要实现的业务逻辑供代理角色调用，&#x3D;&#x3D;关注真正地业务逻辑&#x3D;&#x3D; 代理角色：实现抽象角色，是真实角色的代理，通过真是角色的业务逻辑方法来实现抽象方法，并附加自己的操作。&#x3D;&#x3D;将统一的流程放到代理中处理&#x3D;&#x3D;代码 抽象角色  1234567public interface Star &amp;#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://smooklazz.github.io/img/bg/2.png">
+<meta property="article:published_time" content="2022-04-21T07:45:10.412Z">
+<meta property="article:modified_time" content="2022-04-24T09:04:13.784Z">
+<meta property="article:author" content="Wangyt">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://smooklazz.github.io/img/bg/2.png">
+  
+  
+  <title>Java设计模式-代理模式详解 - 汪先森的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"smooklazz.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"a082e767ee6a414332eadf14f80cab89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>汪先森的小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/bg/postpage.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Java设计模式-代理模式详解">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-21 15:45" pubdate>
+        2022年4月21日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java设计模式-代理模式详解</h1>
+            
+            <div class="markdown-body">
+              <h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><h2 id="一、静态代理"><a href="#一、静态代理" class="headerlink" title="一、静态代理"></a>一、静态代理</h2><h5 id="三类角色"><a href="#三类角色" class="headerlink" title="三类角色"></a>三类角色</h5><ol>
+<li><strong>抽象角色</strong>：定义代理角色和公共角色的公共对外方法</li>
+<li><strong>真实角色</strong>：实现抽象角色，定义真是角色所要实现的业务逻辑供代理角色调用，==关注真正地业务逻辑==</li>
+<li><strong>代理角色</strong>：实现抽象角色，是真实角色的代理，通过真是角色的业务逻辑方法来实现抽象方法，并附加自己的操作。==将统一的流程放到代理中处理==<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5></li>
+<li>抽象角色</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Star</span> &#123;<br>	<span class="hljs-keyword">void</span> <span class="hljs-title function_">confer</span><span class="hljs-params">()</span>;<br>	<span class="hljs-keyword">void</span> <span class="hljs-title function_">signContract</span><span class="hljs-params">()</span>;<br>	<span class="hljs-keyword">void</span> <span class="hljs-title function_">bookTicket</span><span class="hljs-params">()</span>;<br>	<span class="hljs-keyword">void</span> <span class="hljs-title function_">sing</span><span class="hljs-params">()</span>;<br>	<span class="hljs-keyword">void</span> <span class="hljs-title function_">collectMoney</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>真实角色（歌手）</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RealStar</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Star</span>&#123;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">confer</span><span class="hljs-params">()</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;RealStar.confer()&quot;</span>);<br>		<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">signContract</span><span class="hljs-params">()</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;RealStar.signContract()&quot;</span>);<br>		<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">bookTicket</span><span class="hljs-params">()</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;RealStar.bookTicket()&quot;</span>);<br>		<br>	&#125;<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    * 可以继承所有的抽象方法，但主要是唱歌</span><br><span class="hljs-comment">    */</span><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sing</span><span class="hljs-params">()</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;RealStar(Jay).sing()&quot;</span>);<br>		<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">collectMoney</span><span class="hljs-params">()</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;RealStar.collectMoney()&quot;</span>);<br>		<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>代理角色（经纪人）：除了唱歌什么都干</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ProxyStar</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Star</span>&#123;<br><br>	<span class="hljs-keyword">private</span> Star star;<br>	<br>	<br>	<br>	<span class="hljs-keyword">public</span> <span class="hljs-title function_">ProxyStar</span><span class="hljs-params">(Star star)</span> &#123;<br>		<span class="hljs-built_in">super</span>();<br>		<span class="hljs-built_in">this</span>.star = star;<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">confer</span><span class="hljs-params">()</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;ProxyStar.confer()&quot;</span>);<br>		<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">signContract</span><span class="hljs-params">()</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;ProxyStar.signContract()&quot;</span>);<br>		<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">bookTicket</span><span class="hljs-params">()</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;ProxyStar.bookTicket()&quot;</span>);<br>		<br>	&#125;<br>	<span class="hljs-comment">//唱歌交给，构造函数传进来的歌手对象去唱歌</span><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sing</span><span class="hljs-params">()</span> &#123;<br>		star.sing();<br>		<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">collectMoney</span><span class="hljs-params">()</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;ProxyStar.collectMoney()&quot;</span>);<br>		<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li>客户</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Client</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>		<span class="hljs-type">Star</span> <span class="hljs-variable">star</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RealStar</span>();<br>		<span class="hljs-type">Star</span> <span class="hljs-variable">proxy</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ProxyStar</span>(star);<br>		proxy.confer();<br>		proxy.bookTicket();<br>		proxy.sing();<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus">ProxyStar<span class="hljs-selector-class">.confer</span>()<br>ProxyStar<span class="hljs-selector-class">.bookTicket</span>()<br><span class="hljs-function"><span class="hljs-title">RealStar</span><span class="hljs-params">(Jay)</span></span><span class="hljs-selector-class">.sing</span>()<br><br></code></pre></td></tr></table></figure>
+<h5 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h5><p>好处：</p>
+<ul>
+<li>可以使真是角色的操作更加纯粹！不用去关注一些公共的业务</li>
+<li>公共业务交给代理角色！实现业务分工</li>
+<li>公共业务扩展时，方便集中管理</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>一个真实角色就会产生一个代理角色；代码量会翻倍~开发效率低<h2 id="二、动态代理"><a href="#二、动态代理" class="headerlink" title="二、动态代理"></a>二、动态代理</h2></li>
+<li>动态代理和静态代理角色一样</li>
+<li>动态代理的代理类是动态生成的，不是直接写好的</li>
+<li>动态代理分为两大类：基于接口的动态代理；基于类的动态代理<ul>
+<li>基于接口–JDK动态代理</li>
+<li>基于类的–cglib；javassist<h5 id="JDK动态代理"><a href="#JDK动态代理" class="headerlink" title="JDK动态代理"></a>JDK动态代理</h5>动态代理中变化的就是代理和客户端<br>动态代理的一大特点就是编译阶段没有代理类，==在运行时才生成代理类==。<br>代理类：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DynamicProxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">InvocationHandler</span> &#123;<br><br><span class="hljs-comment">//　这个就是我们要代理的真实对象，即房东</span><br><span class="hljs-keyword">private</span> Object target;<br><br><span class="hljs-comment">//  构造方法，给我们要代理的真实对象赋初值</span><br><span class="hljs-keyword">public</span> <span class="hljs-title function_">DynamicProxy</span><span class="hljs-params">(Object target)</span> &#123;<br>    <span class="hljs-built_in">this</span>.target= target;<br>&#125;<br><br><span class="hljs-comment">//proxy:　　指代我们所代理的那个真实对象</span><br><span class="hljs-comment">//method:　　指代的是我们所要调用真实对象的某个方法的Method对象</span><br><span class="hljs-comment">//args:　　指代的是调用真实对象某个方法时接受的参数</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>    <span class="hljs-comment">//　　在代理真实对象前我们可以添加一些自己的操作</span><br>    System.out.println(<span class="hljs-string">&quot;before &quot;</span>+method.getName());<br><br>    System.out.println(<span class="hljs-string">&quot;Method:&quot;</span> + method.getName());<br><br>    <span class="hljs-comment">//        如果方法是 sing则调用真实角色运行方法</span><br>    <span class="hljs-keyword">if</span> (method.getName().equals(<span class="hljs-string">&quot;sing&quot;</span>)) &#123;<br><br>        <span class="hljs-type">Object</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> method.invoke(target, args);<br><br>    &#125; <br><br>    <span class="hljs-comment">//　　在代理真实对象后我们也可以添加一些自己的操作</span><br>    System.out.println(<span class="hljs-string">&quot;after &quot;</span>+method.getName());<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Client：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Client</span> &#123;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span><br>&#123;<br>    <span class="hljs-comment">//    我们要代理的真实对象--歌手</span><br>    Star star= <span class="hljs-keyword">new</span> <span class="hljs-title class_">RealStar</span>();<br><br>    <span class="hljs-comment">//    我们要代理哪个真实对象，就将该对象传进去，最后是通过该真实对象来调用其方法的</span><br>    <span class="hljs-type">InvocationHandler</span> <span class="hljs-variable">handler</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DynamicProxy</span>(star);<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     * 通过Proxy的newProxyInstance方法来创建我们的代理对象，我们来看看其三个参数</span><br><span class="hljs-comment">     * 第一个参数 handler.getClass().getClassLoader() ，我们这里使用handler这个类的ClassLoader对象来加载我们的代理对象</span><br><span class="hljs-comment">     * 第二个参数realSubject.getClass().getInterfaces()，我们这里为代理对象提供的接口是真实对象所实行的接口，表示我要代理的是该真实对象，这样我就能调用这组接口中的方法了</span><br><span class="hljs-comment">     * 第三个参数handler， 我们这里将这个代理对象关联到了上方的 InvocationHandler 这个对象上</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">Star</span> <span class="hljs-variable">proxy</span> <span class="hljs-operator">=</span> (Star) Proxy.newProxyInstance(handler.getClass().getClassLoader(), star<br>            .getClass().getInterfaces(), handler);<span class="hljs-comment">//一个动态代理类，中介</span><br><br>    proxy.sing();<br>&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/">技术博客</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/21/Java%E5%AE%9E%E7%8E%B0%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java实现滑动窗口</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/21/KMP%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3%E3%80%81Java%E5%AE%9E%E7%8E%B0%E5%8F%8A%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">
+                        <span class="hidden-mobile">KMP算法讲解、Java实现及面试题目</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"163e37e111f27efff5e4","clientSecret":"c8633b0fe56f61efb2d34e60c32bc363af83e6be","repo":"comment","owner":"smooklazz","admin":["smooklazz"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '13c11721b40d0e657edbc87c4ace5ee4'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.wytll.xyz" target="_blank" rel="nofollow noopener"><span>汪先森的小站</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/smooklazz" target="_blank" rel="nofollow noopener"><span>smooklazz</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?a082e767ee6a414332eadf14f80cab89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/Cherry.min.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

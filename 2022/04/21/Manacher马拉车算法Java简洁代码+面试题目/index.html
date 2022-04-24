@@ -16,23 +16,23 @@
   <meta name="author" content="汪先森">
   <meta name="keywords" content="">
   
-    <meta name="description" content="UV(Unique visitor)是指通过互联网访问、浏览这个网页的自然人。访问您网站的一台电脑客户端为一个访客。00:00-24:00内相同的客户端只被计算一次。一天内同个访客多次访问仅计算一次。即（UV+1） IP（Internet Protocol）独立IP是指访问过某站点的IP总数，以用户的IP地址作为统计依据。00:00-24:00内相同IP地址之被计算一次。 UV与IP区别：UV–以">
+    <meta name="description" content="Manacher马拉车算法基本概念 添加字符#，可以解决字符串长度奇偶数问题。例如：字符串：11311表格第二行为，以当前字符为中心的最长回文子串长度，除以2则为在原字符串中的回文子串长度。例如：11&#x2F;2&#x3D;5，表示中心为3时最长回文长度为5。     # 1 # 1 # 3 # 1 # 1 #    1 3 5 3 1 11 1 3 5 3 1   2. 回文半径数组：以每个字符为中心，能扩出的回">
 <meta property="og:type" content="article">
-<meta property="og:title" content="清楚！理解“UV、IP和PV＂的定义！">
-<meta property="og:url" content="https://smooklazz.github.io/2022/04/21/UV/index.html">
+<meta property="og:title" content="KMP算法讲解、Java实现及面试题目">
+<meta property="og:url" content="https://smooklazz.github.io/2022/04/21/Manacher%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95Java%E7%AE%80%E6%B4%81%E4%BB%A3%E7%A0%81+%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/index.html">
 <meta property="og:site_name" content="汪先森的小站">
-<meta property="og:description" content="UV(Unique visitor)是指通过互联网访问、浏览这个网页的自然人。访问您网站的一台电脑客户端为一个访客。00:00-24:00内相同的客户端只被计算一次。一天内同个访客多次访问仅计算一次。即（UV+1） IP（Internet Protocol）独立IP是指访问过某站点的IP总数，以用户的IP地址作为统计依据。00:00-24:00内相同IP地址之被计算一次。 UV与IP区别：UV–以">
+<meta property="og:description" content="Manacher马拉车算法基本概念 添加字符#，可以解决字符串长度奇偶数问题。例如：字符串：11311表格第二行为，以当前字符为中心的最长回文子串长度，除以2则为在原字符串中的回文子串长度。例如：11&#x2F;2&#x3D;5，表示中心为3时最长回文长度为5。     # 1 # 1 # 3 # 1 # 1 #    1 3 5 3 1 11 1 3 5 3 1   2. 回文半径数组：以每个字符为中心，能扩出的回">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://smooklazz.github.io/img/bg/2.png">
+<meta property="og:image" content="https://smooklazz.github.io/img/bg/1.png">
 <meta property="article:published_time" content="2022-04-21T07:45:10.412Z">
-<meta property="article:modified_time" content="2022-04-24T08:50:03.378Z">
+<meta property="article:modified_time" content="2022-04-24T09:00:59.451Z">
 <meta property="article:author" content="Wangyt">
-<meta property="article:tag" content="基础">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smooklazz.github.io/img/bg/2.png">
+<meta name="twitter:image" content="https://smooklazz.github.io/img/bg/1.png">
   
   
-  <title>清楚！理解“UV、IP和PV＂的定义！ - 汪先森的小站</title>
+  <title>KMP算法讲解、Java实现及面试题目 - 汪先森的小站</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -178,7 +178,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="清楚！理解“UV、IP和PV＂的定义！">
+            <span class="h2" id="subtitle" title="KMP算法讲解、Java实现及面试题目">
               
             </span>
 
@@ -199,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      454 字
+      1.8k 字
     </span>
   
 
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      16 分钟
     </span>
   
 
@@ -237,14 +237,97 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">清楚！理解“UV、IP和PV＂的定义！</h1>
+            <h1 style="display: none">KMP算法讲解、Java实现及面试题目</h1>
             
             <div class="markdown-body">
-              <h3 id="UV-Unique-visitor"><a href="#UV-Unique-visitor" class="headerlink" title="UV(Unique visitor)"></a>UV(Unique visitor)</h3><p>是指通过互联网访问、浏览这个网页的自然人。访问您网站的一台电脑客户端为一个访客。00:00-24:00内相同的客户端只被计算一次。<br>一天内同个访客多次访问仅计算一次。即（UV+1）</p>
-<h3 id="IP（Internet-Protocol）"><a href="#IP（Internet-Protocol）" class="headerlink" title="IP（Internet Protocol）"></a>IP（Internet Protocol）</h3><p>独立IP是指访问过某站点的IP总数，以用户的IP地址作为统计依据。00:00-24:00内相同IP地址之被计算一次。</p>
-<h3 id="UV与IP区别："><a href="#UV与IP区别：" class="headerlink" title="UV与IP区别："></a>UV与IP区别：</h3><p><strong>UV–以客户端作为计算标准</strong><br><strong>IP–以IP地址作为计算标准</strong><br>如：你和你的家人用各自的账号在同一台电脑上登录新浪微博，则IP数+1，UV数+2。由于使用的是同一台电脑，所以IP不变，但使用的不同账号，所以UV+2</p>
-<h3 id="PV（Page-View）"><a href="#PV（Page-View）" class="headerlink" title="PV（Page View）"></a>PV（Page View）</h3><p>即页面浏览量或点击量，用户每1次对网站中的每个网页访问均被记录1个PV。用户对同一页面的多次访问，访问量累计，用以衡量网站用户访问的网页数量。</p>
-<h3 id="UV与PV区别："><a href="#UV与PV区别：" class="headerlink" title="UV与PV区别："></a>UV与PV区别：</h3><p><strong>PV–以浏览次数为标准</strong><br>简单来说：<br>PV，就是你自己刷新这个页面，刷新10次，PV就+10<br>UV，就是你自己刷新这个页面，刷新10次，UV只+1</p>
+              <h1 id="Manacher马拉车算法"><a href="#Manacher马拉车算法" class="headerlink" title="Manacher马拉车算法"></a>Manacher马拉车算法</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ol>
+<li><strong>添加字符#<strong>，可以解决字符串长度奇偶数问题。例如：<br>字符串：11311<br>表格第二行为，以当前字符为中心的最长回文子串长度，</strong>除以2</strong>则为在原字符串中的回文子串长度。例如：11/2=5，表示中心为3时最长回文长度为5。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>1</th>
+<th>#</th>
+<th>1</th>
+<th>#</th>
+<th>3</th>
+<th>#</th>
+<th>1</th>
+<th>#</th>
+<th>1</th>
+<th>#</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>1</td>
+<td><strong>11</strong></td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2. <strong>回文半径数组</strong>：以每个字符为中心，能扩出的回文半径的长度</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3. 所有回文半径的<strong>回文最右边界</strong>，当前字符和之前字符能到达的最有边界。例如：012131210；当到3时，右边界到达字符串最右边的0位置，所以当3后面的字符1210，每个字符的最右边界都是最右边的0位置。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>4. 回文右边界的中心：<strong>最早</strong>取得回文最右边界位置的中心，此概念是<strong>与回文右边界绑定</strong>的。</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p> |字符串|0 |1|2 |1|3  | 1 | 2 | 1 | 0 |<br>|–|–|–|–|–|–|–|–|–|–|–|<br> |下标|0 |1|2 |3|4  | 5 | 6 | 7 | 8 |<br>|  最右边界（R）|0  |1|3|3|8|8|8|8|8|<br>|  中心（C）|0  |1|2|2|4|4|4|4|4|</p>
+<h2 id="以当前位置向外扩的可能性"><a href="#以当前位置向外扩的可能性" class="headerlink" title="以当前位置向外扩的可能性"></a>以当前位置向外扩的可能性</h2><p>假设当前位置为i</p>
+<ol>
+<li>i不在<strong>回文最右边界</strong>内时<br> 选择暴力向两边扩，扩不出去则自己为最右边界。</li>
+<li>i在<strong>回文最右边界</strong>内时<br> ==首先通过i和C（中心），找到<strong>i</strong>的对称点<strong>i’</strong>==<blockquote>
+<ul>
+<li>如果<strong>i’</strong> 的边界在LR边界内，则<strong>i</strong>的边界也在最右边界范围内，不用再去扩。<br><img src="https://img-blog.csdnimg.cn/20200418172916323.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzIxODUwMA==,size_16,color_FFFFFF,t_70" srcset="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/loading.gif" lazyload alt="Smooklazz"></li>
+<li>如果<strong>i’</strong> 的左边界不在LR边界内，则<strong>i</strong>的回文半径是i到R的长度<br><img src="https://img-blog.csdnimg.cn/20200418174244167.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzIxODUwMA==,size_16,color_FFFFFF,t_70" srcset="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/loading.gif" lazyload alt="在这里插入图片描述"></li>
+<li>如果<strong>i’</strong>半径压线，则需要继续向外扩<br><img src="https://img-blog.csdnimg.cn/20200418174722815.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzIxODUwMA==,size_16,color_FFFFFF,t_70" srcset="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/loading.gif" lazyload alt="在这里插入图片描述"></li>
+</ul>
+</blockquote>
+<h2 id="时间复杂度O-N"><a href="#时间复杂度O-N" class="headerlink" title="时间复杂度O(N)"></a>时间复杂度O(N)</h2><h2 id="Java代码"><a href="#Java代码" class="headerlink" title="Java代码"></a>Java代码</h2></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * 插入字符#</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">char</span>[] manacherString(String str) &#123;<br>		<span class="hljs-type">char</span>[] charArr = str.toCharArray();<br>		<span class="hljs-type">char</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-title class_">char</span>[str.length() * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>];<span class="hljs-comment">//扩展的数组</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">index</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i != res.length; i++) &#123;<br>			res[i] = (i &amp; <span class="hljs-number">1</span>) == <span class="hljs-number">0</span> ? <span class="hljs-string">&#x27;#&#x27;</span> : charArr[index++];<span class="hljs-comment">//i &amp; 1与运算：表示i的二进制第一位的数与1的与运算，总体下来结果为：01010101···</span><br>		&#125;<br>		<span class="hljs-keyword">return</span> res;<br>	&#125;<br><br><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">maxLcpsLength</span><span class="hljs-params">(String str)</span> &#123;<br>		<span class="hljs-keyword">if</span> (str == <span class="hljs-literal">null</span> || str.length() == <span class="hljs-number">0</span>) &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>		&#125;<br>		<span class="hljs-type">char</span>[] charArr = manacherString(str);<span class="hljs-comment">//获得处理好的字符串</span><br>		<span class="hljs-type">int</span>[] pArr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[charArr.length];<span class="hljs-comment">//存储回文半径</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">C</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1</span>;<br>		<span class="hljs-type">int</span> <span class="hljs-variable">R</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1</span>;<br>		<span class="hljs-type">int</span> <span class="hljs-variable">max</span> <span class="hljs-operator">=</span> Integer.MIN_VALUE;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i != charArr.length; i++) &#123;<br>			pArr[i] = R &gt; i ? Math.min(pArr[<span class="hljs-number">2</span> * C - i], R - i) : <span class="hljs-number">1</span>;<span class="hljs-comment">//划分为两个大的范围，i在内和i在外，并且不需要进行验证（即都是扩展之前的状态）</span><br>			<span class="hljs-comment">//虽然第二大类的1、2类可以直接出结果，不需要再扩，但是这里对四种情况都进行扩充，第二大类的1、2类会直接判断不能再扩</span><br>			<span class="hljs-keyword">while</span> (i + pArr[i] &lt; charArr.length &amp;&amp; i - pArr[i] &gt; -<span class="hljs-number">1</span>) &#123;<span class="hljs-comment">//判断i扩充是否越界</span><br>				<span class="hljs-keyword">if</span> (charArr[i + pArr[i]] == charArr[i - pArr[i]])<span class="hljs-comment">//扩充比较</span><br>					pArr[i]++;<br>				<span class="hljs-keyword">else</span> &#123;<br>					<span class="hljs-keyword">break</span>;<br>				&#125;<br>			&#125;<br>			<span class="hljs-keyword">if</span> (i + pArr[i] &gt; R) &#123;<br>				R = i + pArr[i];<br>				C = i;<br>			&#125;<br>			max = Math.max(max, pArr[i]);<br>		&#125;<br>		<span class="hljs-keyword">return</span> max - <span class="hljs-number">1</span>;<br>	&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="面试题目"><a href="#面试题目" class="headerlink" title="面试题目"></a>面试题目</h2><p>要求：如果只能向字符串的最后添加字符，怎么样让字符串变为回文串，并且添加的字符数量最少。<br>例如：abc12321；则添加cba可以达成要求。<br>解法：在判断最右边界R时，当第一次R到达最右边界时（例如：中心为3时最右边界R为1，恰为字符串最右边界），则停止，并根据最右边界R中心C判断出左边界，并且将左边界前的字符串逆序添加到字符串后边。</p>
 
             </div>
             <hr>
@@ -262,7 +345,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
                     
                   </div>
                 
@@ -279,7 +362,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/21/Manacher%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95Java%E7%AE%80%E6%B4%81%E4%BB%A3%E7%A0%81+%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">
+                      <a href="/2022/04/21/KMP%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3%E3%80%81Java%E5%AE%9E%E7%8E%B0%E5%8F%8A%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">KMP算法讲解、Java实现及面试题目</span>
                         <span class="visible-mobile">上一篇</span>
@@ -289,8 +372,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/04/21/hello-world/">
-                        <span class="hidden-mobile">Mysql8.0及以上 only_full_group_by报错解决方案</span>
+                      <a href="/2022/04/21/UV/">
+                        <span class="hidden-mobile">清楚！理解“UV、IP和PV＂的定义！</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -315,7 +398,7 @@
         var options = Object.assign(
           {"clientID":"163e37e111f27efff5e4","clientSecret":"c8633b0fe56f61efb2d34e60c32bc363af83e6be","repo":"comment","owner":"smooklazz","admin":["smooklazz"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '0f10195fe11293e9fc0f682efa7ba34e'
+            id: 'e1c122f0439ce6ccd550c8a57e2c27c6'
           }
         )
         var gitalk = new Gitalk(options);

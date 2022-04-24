@@ -1,0 +1,599 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/icon/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/icon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#809da3">
+  <meta name="author" content="汪先森">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="KMP算法讲解、Java实现及面试题目KMP算法讲解 KMP用来干什么？    在说KMP算法之前，我们还是先来说一下KMP算法是用来解决什么问题的。  问题：假如现在有两个字符串s1（aabcabced）和字符串s2（abcabce）   **现在要求**：s2在s1中第一次出现的下标（上面的例子结果下标就为1）。    暴力的解法是：遍历一遍s1的所有字符，并且以遍历到的字符为起始与s2进行比">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KMP算法讲解、Java实现及面试题目">
+<meta property="og:url" content="https://smooklazz.github.io/2022/04/21/KMP%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3%E3%80%81Java%E5%AE%9E%E7%8E%B0%E5%8F%8A%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/index.html">
+<meta property="og:site_name" content="汪先森的小站">
+<meta property="og:description" content="KMP算法讲解、Java实现及面试题目KMP算法讲解 KMP用来干什么？    在说KMP算法之前，我们还是先来说一下KMP算法是用来解决什么问题的。  问题：假如现在有两个字符串s1（aabcabced）和字符串s2（abcabce）   **现在要求**：s2在s1中第一次出现的下标（上面的例子结果下标就为1）。    暴力的解法是：遍历一遍s1的所有字符，并且以遍历到的字符为起始与s2进行比">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://smooklazz.github.io/img/bg/1.png">
+<meta property="article:published_time" content="2022-04-21T07:45:10.412Z">
+<meta property="article:modified_time" content="2022-04-24T08:59:38.924Z">
+<meta property="article:author" content="Wangyt">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://smooklazz.github.io/img/bg/1.png">
+  
+  
+  <title>KMP算法讲解、Java实现及面试题目 - 汪先森的小站</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"smooklazz.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"a082e767ee6a414332eadf14f80cab89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>汪先森的小站</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.0/img/bg/postpage.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="KMP算法讲解、Java实现及面试题目">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-21 15:45" pubdate>
+        2022年4月21日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      24 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">KMP算法讲解、Java实现及面试题目</h1>
+            
+            <div class="markdown-body">
+              <h1 id="KMP算法讲解、Java实现及面试题目"><a href="#KMP算法讲解、Java实现及面试题目" class="headerlink" title="KMP算法讲解、Java实现及面试题目"></a>KMP算法讲解、Java实现及面试题目</h1><h2 id="KMP算法讲解"><a href="#KMP算法讲解" class="headerlink" title="KMP算法讲解"></a>KMP算法讲解</h2><ul>
+<li>KMP用来干什么？</li>
+</ul>
+<hr>
+<p> 在说KMP算法之前，我们还是先来说一下KMP算法是用来解决什么问题的。</p>
+<ul>
+<li><strong>问题</strong>：假如现在有两个字符串s1（a<strong>abcabce</strong>d）和字符串s2（abcabce）<div class="code-wrapper"><pre><code class="hljs">   **现在要求**：s2在s1中第一次出现的下标（上面的例子结果下标就为1）。
+</code></pre></div>
+  <strong>暴力的解法是</strong>：遍历一遍s1的所有字符，并且以遍历到的字符为起始与s2进行比对，如果有完全匹配的字符串，则对应的                    起始字符下标便是所求的下标；这样的解法时间复杂度是O(N*M)。<br>   而KMP算法就是对暴力解法的优化。</li>
+</ul>
+<ul>
+<li>KMP算法</li>
+</ul>
+<hr>
+<div class="code-wrapper"><pre><code class="hljs">KMP算法优化主要是提出了一个next数组（跟s2有关系），那么这个是用来干什么的呢？
+ next数组存的是当前字符前的字符串（不包括自己）的最长的 前缀和 后缀 相同的长度(第一个字符和第二个字符在next中规定为-1和0)
+ 假设s2是（abcabce）那么next数组存储对应如下所示：
+ 
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>s2</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>e</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>下标</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>next</td>
+<td>-1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<div class="code-wrapper"><pre><code class="hljs">（1）现在规定next下标为0时值为-1，下标为1时值为0；因为当字符为第一个字符时，没有前缀。当字符为第二个字符时，前缀和后缀一样所以为0；
+（2）当下标为2时，前面的字符串为ab，那么他的前缀为a，后缀为b时不相同，所以赋值为0；
+（3）同理当下标为3时也为0；
+（4）当下标为4时，b前面的字符串，前缀为a和后缀为a时，相同且是最长的，所以赋值为1
+（5）当下标为5时，c前面的字符串，前缀为ab和后缀为ab时，相同且是最长的，所以赋值为2
+（6）当下标为6时，e前面的字符串，前缀为abc和后缀为abc时，相同且是最长的，所以赋值为3
+</code></pre></div>
+<p>求出next数组后，接下来就要进行求解了：<br>    （1）首先初始化两个指针x，y，分别记录两个字符串s1，s2，当前的下标；<br>    （2）当两个下标所对应的字符相同则同时自增<br>    （3）不同，则在next数组中寻找y对应的下标的值（即y对应当前字符的前面字符串的前缀的下标），判断其是否为-1，为-1则y=0，且x与y对应的两个字符都不相同，所以x自增1<br>    （4）若不为-1，则表示y当前字符前面可能还存在前缀，所以在next中查找对应y下标的值，并将其赋给y（因为next中存的是长度，所以换成下标的话则为前缀后面一位），继续从头重复前面的步骤，直到越界。<br>    这样求解的算法<strong>复杂度为O(N)</strong></p>
+<h2 id="Java代码"><a href="#Java代码" class="headerlink" title="Java代码"></a>Java代码</h2><p><strong>求s2字符串的next数组：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * 求的是当前字符的最长的前缀和后缀相同的长度例如abcabcd（d的前面的字符串的 前缀和后缀相同的 最长的字符串是abc）</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>[] getNext(<span class="hljs-type">char</span>[] str) &#123;<br>		<span class="hljs-keyword">if</span>(str.length == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[] &#123;-<span class="hljs-number">1</span>&#125;;<br>		<span class="hljs-type">int</span> [] next = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span> [str.length];<br>		next[<span class="hljs-number">0</span>] = -<span class="hljs-number">1</span>;<span class="hljs-comment">//初始化next数组的前两个值</span><br>		next[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>		<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>;<br>		<span class="hljs-type">int</span> <span class="hljs-variable">cn</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<span class="hljs-comment">//记录前一个数的前缀下一个字符的的下标</span><br>		<span class="hljs-keyword">while</span>(i &lt; str.length) &#123;<br>			<span class="hljs-keyword">if</span>(str[i - <span class="hljs-number">1</span>] == str[cn]) &#123;<br>				next[i++] = ++cn;<span class="hljs-comment">//两个字符相同则++</span><br>			&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cn &gt; <span class="hljs-number">0</span>)&#123;<br>				cn = next[cn];<span class="hljs-comment">//如果不相等，且cn大于0，则将next数组中当前cn下标的值赋给cn，即cn下标的最小前缀</span><br>			&#125;<span class="hljs-keyword">else</span> &#123;<br>				next[i++] = <span class="hljs-number">0</span>;<span class="hljs-comment">//当cn==0时，当前i对应next为0</span><br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">return</span> next;<br>	&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>求解s2字符串在s1字符串中第一次出现的下标：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">kmp</span><span class="hljs-params">(String s1, String s2)</span> &#123;<br>		<span class="hljs-keyword">if</span>(s1.length() &lt; <span class="hljs-number">1</span> || s2.length() &lt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;<br>		<span class="hljs-type">char</span>[] chars1 = s1.toCharArray();<br>		<span class="hljs-type">char</span>[] chars2 = s2.toCharArray();<br>		<span class="hljs-type">int</span> [] next = getNext(chars2);<span class="hljs-comment">//获取s2的next数组</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<span class="hljs-comment">//初始化两个指针</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">y</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">while</span>(x &lt; s1.length() &amp;&amp; y &lt; s2.length()) &#123;<br>			<span class="hljs-keyword">if</span>(chars1[x] == chars2[y]) &#123;<span class="hljs-comment">//相同则自增一</span><br>				x++;<br>				y++;<br>			&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(next[y] == -<span class="hljs-number">1</span>) &#123;<span class="hljs-comment">//找到头了，就重新开始</span><br>				x++;<br>			&#125;<span class="hljs-keyword">else</span> &#123;<br>				y = next[y];<span class="hljs-comment">//不同则寻找前一个</span><br>			&#125;<br>		&#125;<br>		<span class="hljs-type">return</span> <span class="hljs-variable">y</span> <span class="hljs-operator">=</span>= s2.length() ? x - y : -<span class="hljs-number">1</span>;<br>	&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="面试题目"><a href="#面试题目" class="headerlink" title="面试题目"></a>面试题目</h2><p> 京东面试题：给一个原始串例如：abcabc<br> 要求：在原始串后添加字符，使添加字符串最短，并且可以使原字符串出现两次，并且起始位置不同：例如：abcabcabc<br> 解法：此题与上面求next数组同理，可以将原始串类比成，求当前字符的最长的前缀和后缀相同的长度；则最长前缀为abc<br> 所以只需要在原始串的基础上继续添加，abc前缀后面的字符串就可以了。</p>
+<h3 id="Java代码-1"><a href="#Java代码-1" class="headerlink" title="Java代码"></a>Java代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>[] getNexts(<span class="hljs-type">char</span>[] str) &#123;<br>	<span class="hljs-keyword">if</span>(str.length == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[] &#123;-<span class="hljs-number">1</span>&#125;;<br>	<span class="hljs-type">int</span> [] next = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[str.length];<br>	next[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>	<span class="hljs-type">int</span> <span class="hljs-variable">cn</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>	<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">while</span>(i &lt; str.length) &#123;<br>		<span class="hljs-keyword">if</span>(str[cn] == str[i]) &#123;<br>			next[i++] = ++cn;<br>		&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cn &gt; <span class="hljs-number">0</span>) &#123;<br>			cn = next[cn];<br>		&#125;<span class="hljs-keyword">else</span> &#123;<br>			i++;<br>		&#125;<br>	&#125;<br>	<br>	<span class="hljs-keyword">return</span> next;<br>&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>  String <span class="hljs-title function_">remke</span><span class="hljs-params">(String s)</span> &#123;<br>	<span class="hljs-keyword">if</span>(s.length() &lt;= <span class="hljs-number">0</span>)<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>	<span class="hljs-type">int</span> [] next = getNexts(s.toCharArray());<br>	<br>	<span class="hljs-keyword">return</span> s + s.substring(next[next.length - <span class="hljs-number">1</span>], s.length());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>进阶题目：判断一棵二叉树是否是另一棵二叉树的子树<br>解法：将两棵二叉树进行序列化成字符串，将问题变为求一个字符串是否是另一个字符串的子串，然后采用KMP算法。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2/">技术博客</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/21/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java设计模式-代理模式详解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/04/21/Manacher%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95Java%E7%AE%80%E6%B4%81%E4%BB%A3%E7%A0%81+%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">
+                        <span class="hidden-mobile">KMP算法讲解、Java实现及面试题目</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"163e37e111f27efff5e4","clientSecret":"c8633b0fe56f61efb2d34e60c32bc363af83e6be","repo":"comment","owner":"smooklazz","admin":["smooklazz"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '3c6558f7992cae3728e132c8a595bdc5'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://blog.wytll.xyz" target="_blank" rel="nofollow noopener"><span>汪先森的小站</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/smooklazz" target="_blank" rel="nofollow noopener"><span>smooklazz</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?a082e767ee6a414332eadf14f80cab89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/Cherry.min.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
