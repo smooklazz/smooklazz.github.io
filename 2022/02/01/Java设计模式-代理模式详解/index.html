@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.1/img/icon/favicon.png">
-  <link rel="icon" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.1/img/icon/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/icon/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/icon/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,17 +19,17 @@
     <meta name="description" content="代理模式一、静态代理三类角色 抽象角色：定义代理角色和公共角色的公共对外方法 真实角色：实现抽象角色，定义真是角色所要实现的业务逻辑供代理角色调用，&#x3D;&#x3D;关注真正地业务逻辑&#x3D;&#x3D; 代理角色：实现抽象角色，是真实角色的代理，通过真是角色的业务逻辑方法来实现抽象方法，并附加自己的操作。&#x3D;&#x3D;将统一的流程放到代理中处理&#x3D;&#x3D;代码 抽象角色  1234567public interface Star &amp;#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java设计模式-代理模式详解">
-<meta property="og:url" content="https://smooklazz.github.io/2022/04/21/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:url" content="https://smooklazz.github.io/2022/02/01/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="汪先森的小站">
 <meta property="og:description" content="代理模式一、静态代理三类角色 抽象角色：定义代理角色和公共角色的公共对外方法 真实角色：实现抽象角色，定义真是角色所要实现的业务逻辑供代理角色调用，&#x3D;&#x3D;关注真正地业务逻辑&#x3D;&#x3D; 代理角色：实现抽象角色，是真实角色的代理，通过真是角色的业务逻辑方法来实现抽象方法，并附加自己的操作。&#x3D;&#x3D;将统一的流程放到代理中处理&#x3D;&#x3D;代码 抽象角色  1234567public interface Star &amp;#123;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://smooklazz.github.io/img/bg/2.png">
-<meta property="article:published_time" content="2022-04-21T07:45:10.412Z">
-<meta property="article:modified_time" content="2022-04-24T09:04:13.784Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/index/daili.png">
+<meta property="article:published_time" content="2022-02-01T03:33:02.000Z">
+<meta property="article:modified_time" content="2022-04-28T11:10:18.958Z">
 <meta property="article:author" content="Wangyt">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smooklazz.github.io/img/bg/2.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/index/daili.png">
   
   
   <title>Java设计模式-代理模式详解 - 汪先森的小站</title>
@@ -69,7 +69,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"smooklazz.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.1/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"a082e767ee6a414332eadf14f80cab89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"smooklazz.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"a082e767ee6a414332eadf14f80cab89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -173,7 +173,7 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.1/img/bg/postpage.png') no-repeat center center;
+         style="background: url('https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/banner/banner_default.jpeg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
@@ -188,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-04-21 15:45" pubdate>
-        2022年4月21日 下午
+      <time datetime="2022-02-01 11:33" pubdate>
+        2022年2月1日 中午
       </time>
     </span>
   
@@ -213,6 +213,14 @@
   
 
   
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
   
 </div>
 
@@ -238,6 +246,12 @@
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">Java设计模式-代理模式详解</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：22 分钟前
+                
+              </p>
             
             <div class="markdown-body">
               <h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><h2 id="一、静态代理"><a href="#一、静态代理" class="headerlink" title="一、静态代理"></a>一、静态代理</h2><h5 id="三类角色"><a href="#三类角色" class="headerlink" title="三类角色"></a>三类角色</h5><ol>
@@ -317,9 +331,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/24/JVM-%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%E5%8F%8A%E5%85%B6%E4%BD%9C%E7%94%A8/">
+                      <a href="/2022/02/03/KMP%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3%E3%80%81Java%E5%AE%9E%E7%8E%B0%E5%8F%8A%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JVM-程序计数器及其作用</span>
+                        <span class="hidden-mobile">KMP算法讲解、Java实现及面试题目</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -327,8 +341,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/04/21/Java%E5%AE%9E%E7%8E%B0%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-                        <span class="hidden-mobile">Java实现滑动窗口</span>
+                      <a href="/2022/01/01/hello-world/">
+                        <span class="hidden-mobile">Mysql8.0及以上 only_full_group_by报错解决方案</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -353,7 +367,7 @@
         var options = Object.assign(
           {"clientID":"163e37e111f27efff5e4","clientSecret":"c8633b0fe56f61efb2d34e60c32bc363af83e6be","repo":"comment","owner":"smooklazz","admin":["smooklazz"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '13c11721b40d0e657edbc87c4ace5ee4'
+            id: '8b50d4b1147fe4da8668e47ae15573e9'
           }
         )
         var gitalk = new Gitalk(options);

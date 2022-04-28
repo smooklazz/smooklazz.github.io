@@ -1,0 +1,8 @@
+https://blog.wytll.xyz/2021/10/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/
+https://blog.wytll.xyz/2022/01/01/hello-world/
+https://blog.wytll.xyz/2022/02/01/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/
+https://blog.wytll.xyz/2022/02/05/Manacher%E9%A9%AC%E6%8B%89%E8%BD%A6%E7%AE%97%E6%B3%95Java%E7%AE%80%E6%B4%81%E4%BB%A3%E7%A0%81+%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/
+https://blog.wytll.xyz/2022/02/03/KMP%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3%E3%80%81Java%E5%AE%9E%E7%8E%B0%E5%8F%8A%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/
+https://blog.wytll.xyz/2022/04/24/JVM-%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%E5%8F%8A%E5%85%B6%E4%BD%9C%E7%94%A8/
+https://blog.wytll.xyz/2021/06/01/Java%E5%AE%9E%E7%8E%B0%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/
+https://blog.wytll.xyz/2021/10/01/UV/

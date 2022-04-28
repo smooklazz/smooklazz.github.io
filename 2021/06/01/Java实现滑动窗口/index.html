@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.1/img/icon/favicon.png">
-  <link rel="icon" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.1/img/icon/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/icon/favicon.png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/icon/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,17 +19,17 @@
     <meta name="description" content="滑动窗口问题LeetCode：239. 滑动窗口最大值给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。 返回滑动窗口中的最大值。 窗口这里窗口采用双端队列实现（即双向链表），并且&#x3D;&#x3D;窗口必须满足从大到小排列&#x3D;&#x3D;，如下所示向窗口添加数据时：  假如窗口大小为8，遍历数组，并依次放入队列，存在三种">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java实现滑动窗口">
-<meta property="og:url" content="https://smooklazz.github.io/2022/04/21/Java%E5%AE%9E%E7%8E%B0%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/index.html">
+<meta property="og:url" content="https://smooklazz.github.io/2021/06/01/Java%E5%AE%9E%E7%8E%B0%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/index.html">
 <meta property="og:site_name" content="汪先森的小站">
 <meta property="og:description" content="滑动窗口问题LeetCode：239. 滑动窗口最大值给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。 返回滑动窗口中的最大值。 窗口这里窗口采用双端队列实现（即双向链表），并且&#x3D;&#x3D;窗口必须满足从大到小排列&#x3D;&#x3D;，如下所示向窗口添加数据时：  假如窗口大小为8，遍历数组，并依次放入队列，存在三种">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://smooklazz.github.io/img/bg/1.png">
-<meta property="article:published_time" content="2022-04-21T07:45:10.412Z">
-<meta property="article:modified_time" content="2022-04-24T09:02:40.932Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/index/239.png">
+<meta property="article:published_time" content="2021-06-01T01:36:07.000Z">
+<meta property="article:modified_time" content="2022-04-28T11:03:03.960Z">
 <meta property="article:author" content="Wangyt">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://smooklazz.github.io/img/bg/1.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/index/239.png">
   
   
   <title>Java实现滑动窗口 - 汪先森的小站</title>
@@ -69,7 +69,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"smooklazz.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.1/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"a082e767ee6a414332eadf14f80cab89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"smooklazz.github.io","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"a082e767ee6a414332eadf14f80cab89","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -173,7 +173,7 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://cdn.jsdelivr.net/gh/smooklazz/cdn@v1.0.1/img/bg/postpage.png') no-repeat center center;
+         style="background: url('https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/banner/239.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
@@ -188,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-04-21 15:45" pubdate>
-        2022年4月21日 下午
+      <time datetime="2021-06-01 09:36" pubdate>
+        2021年6月1日 上午
       </time>
     </span>
   
@@ -213,6 +213,14 @@
   
 
   
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
   
 </div>
 
@@ -238,6 +246,12 @@
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">Java实现滑动窗口</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：29 分钟前
+                
+              </p>
             
             <div class="markdown-body">
               <h1 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><strong>LeetCode：239. 滑动窗口最大值</strong><br>给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。</p>
@@ -584,21 +598,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/04/21/Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3/">
+                      <a href="/2021/10/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java设计模式-代理模式详解</span>
+                        <span class="hidden-mobile">单例模式</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2022/04/21/KMP%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3%E3%80%81Java%E5%AE%9E%E7%8E%B0%E5%8F%8A%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">
-                        <span class="hidden-mobile">KMP算法讲解、Java实现及面试题目</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
@@ -620,7 +628,7 @@
         var options = Object.assign(
           {"clientID":"163e37e111f27efff5e4","clientSecret":"c8633b0fe56f61efb2d34e60c32bc363af83e6be","repo":"comment","owner":"smooklazz","admin":["smooklazz"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: 'f1c06458d3ed9422088452d0a7c250bd'
+            id: 'e0db21286ec5db205c11bcc266dd0029'
           }
         )
         var gitalk = new Gitalk(options);
