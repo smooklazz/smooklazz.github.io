@@ -16,23 +16,23 @@
   <meta name="author" content="汪先森">
   <meta name="keywords" content="">
   
-    <meta name="description" content="单例模式饿汉式为什么是静态的？为了保证外部不需要创建对象就可以初始化对象，并且直接用类名即可调用初始化对象，获取对象实例缺点：即时没有使用对象，调用类时也会创建对象，会造成资源浪费 应用 懒汉式存在线程安全问题 单例模式的应用实例【例1】用懒汉式单例模式模拟产生美国当今总统对象。 分析：在每一届任期内，美国的总统只有一人，所以本实例适合用单例模式实现，图 2 所示是用懒汉式单例实现的结构图。 12">
+    <meta name="description" content="建造者模式模式的定义与特点建造者（Builder）模式的定义：指将一个复杂对象的构造与它的表示分离，使同样的构建过程可以创建不同的表示，这样的设计模式被称为建造者模式。它是将一个复杂的对象分解为多个简单的对象，然后一步一步构建而成。它将变与不变相分离，即产品的组成部分是不变的，但每一部分是可以灵活选择的。 该模式的主要优点如下：  封装性好，构建和表示分离。 扩展性好，各个具体的建造者相互独立，有">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单例模式">
-<meta property="og:url" content="https://smooklazz.github.io/2021/10/01/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:title" content="建造者模式">
+<meta property="og:url" content="https://smooklazz.github.io/2021/10/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="汪先森的小站">
-<meta property="og:description" content="单例模式饿汉式为什么是静态的？为了保证外部不需要创建对象就可以初始化对象，并且直接用类名即可调用初始化对象，获取对象实例缺点：即时没有使用对象，调用类时也会创建对象，会造成资源浪费 应用 懒汉式存在线程安全问题 单例模式的应用实例【例1】用懒汉式单例模式模拟产生美国当今总统对象。 分析：在每一届任期内，美国的总统只有一人，所以本实例适合用单例模式实现，图 2 所示是用懒汉式单例实现的结构图。 12">
+<meta property="og:description" content="建造者模式模式的定义与特点建造者（Builder）模式的定义：指将一个复杂对象的构造与它的表示分离，使同样的构建过程可以创建不同的表示，这样的设计模式被称为建造者模式。它是将一个复杂的对象分解为多个简单的对象，然后一步一步构建而成。它将变与不变相分离，即产品的组成部分是不变的，但每一部分是可以灵活选择的。 该模式的主要优点如下：  封装性好，构建和表示分离。 扩展性好，各个具体的建造者相互独立，有">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/index/singleton.png">
-<meta property="article:published_time" content="2021-10-01T02:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-29T02:34:32.867Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/index/builder.png">
+<meta property="article:published_time" content="2021-10-02T02:00:00.000Z">
+<meta property="article:modified_time" content="2022-04-29T02:44:08.846Z">
 <meta property="article:author" content="Wangyt">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/index/singleton.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/index/builder.png">
   
   
-  <title>单例模式 - 汪先森的小站</title>
+  <title>建造者模式 - 汪先森的小站</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -173,12 +173,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/banner/banner_default.jpeg') no-repeat center center;
+         style="background: url('https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/banner/builder.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="单例模式">
+            <span class="h2" id="subtitle" title="建造者模式">
               
             </span>
 
@@ -188,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-10-01 10:00" pubdate>
-        2021年10月1日 上午
+      <time datetime="2021-10-02 10:00" pubdate>
+        2021年10月2日 上午
       </time>
     </span>
   
@@ -199,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      2.2k 字
     </span>
   
 
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10 分钟
+      19 分钟
     </span>
   
 
@@ -245,21 +245,38 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">单例模式</h1>
+            <h1 style="display: none">建造者模式</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：13 分钟前
+                  本文最后更新于：4 分钟前
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><h2 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h2><p><img src="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/markdown/singleton1.png" srcset="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/loading.gif" lazyload alt="饿汉式"><br>为什么是静态的？为了保证外部不需要创建对象就可以初始化对象，并且直接用类名即可调用初始化对象，获取对象实例<br>缺点：即时没有使用对象，调用类时也会创建对象，会造成资源浪费</p>
-<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p><img src="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/markdown/singleton2.png" srcset="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/loading.gif" lazyload alt="应用"></p>
-<h2 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h2><p><img src="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/markdown/singleton3.png" srcset="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/loading.gif" lazyload alt="懒汉式"><br>存在线程安全问题</p>
-<h2 id="单例模式的应用实例"><a href="#单例模式的应用实例" class="headerlink" title="单例模式的应用实例"></a>单例模式的应用实例</h2><p>【例1】用懒汉式单例模式模拟产生美国当今总统对象。</p>
-<p>分析：在每一届任期内，美国的总统只有一人，所以本实例适合用单例模式实现，图 2 所示是用懒汉式单例实现的结构图。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SingletonLazy</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">President</span> <span class="hljs-variable">zt1</span> <span class="hljs-operator">=</span> President.getInstance();<br>        zt1.getName();    <span class="hljs-comment">//输出总统的名字</span><br>        <span class="hljs-type">President</span> <span class="hljs-variable">zt2</span> <span class="hljs-operator">=</span> President.getInstance();<br>        zt2.getName();    <span class="hljs-comment">//输出总统的名字</span><br>        <span class="hljs-keyword">if</span> (zt1 == zt2) &#123;<br>            System.out.println(<span class="hljs-string">&quot;他们是同一人！&quot;</span>);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            System.out.println(<span class="hljs-string">&quot;他们不是同一人！&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">President</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">volatile</span> <span class="hljs-type">President</span> <span class="hljs-variable">instance</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;    <span class="hljs-comment">//保证instance在所有线程中同步</span><br><br>    <span class="hljs-comment">//private避免类在外部被实例化</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">President</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;产生一个总统！&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">synchronized</span> President <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//在getInstance方法上加同步</span><br>        <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">null</span>) &#123;<br>            instance = <span class="hljs-keyword">new</span> <span class="hljs-title class_">President</span>();<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            System.out.println(<span class="hljs-string">&quot;已经有一个总统，不能产生新总统！&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">getName</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;我是美国总统：特朗普。&quot;</span>);<br>    &#125;<br>&#125;<br><br><br><br>产生一个总统！<br>我是美国总统：特朗普。<br>已经有一个总统，不能产生新总统！<br>我是美国总统：特朗普。<br>他们是同一人！<br></code></pre></td></tr></table></figure>
+              <h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h1><h2 id="模式的定义与特点"><a href="#模式的定义与特点" class="headerlink" title="模式的定义与特点"></a>模式的定义与特点</h2><p>建造者（Builder）模式的定义：指将一个复杂对象的构造与它的表示分离，使同样的构建过程可以创建不同的表示，这样的<a target="_blank" rel="noopener" href="http://c.biancheng.net/design_pattern/">设计模式</a>被称为建造者模式。它是将一个复杂的对象分解为多个简单的对象，然后一步一步构建而成。它将变与不变相分离，即产品的组成部分是不变的，但每一部分是可以灵活选择的。</p>
+<p>该模式的主要优点如下：</p>
+<ol>
+<li>封装性好，构建和表示分离。</li>
+<li>扩展性好，各个具体的建造者相互独立，有利于系统的解耦。</li>
+<li>客户端不必知道产品内部组成的细节，建造者可以对创建过程逐步细化，而不对其它模块产生任何影响，便于控制细节风险。</li>
+</ol>
+<p>其缺点如下：</p>
+<ol>
+<li>产品的组成部分必须相同，这限制了其使用范围。</li>
+<li>如果产品的内部变化复杂，如果产品内部发生变化，则建造者也要同步修改，后期维护成本较大。</li>
+</ol>
+<p>建造者（Builder）模式和工厂模式的关注点不同：建造者模式注重零部件的组装过程，而<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/1348.html">工厂方法模式</a>更注重零部件的创建过程，但两者可以结合使用。</p>
+<h2 id="模式的结构与实现"><a href="#模式的结构与实现" class="headerlink" title="模式的结构与实现"></a>模式的结构与实现</h2><p>建造者（Builder）模式由产品、抽象建造者、具体建造者、指挥者等 4 个要素构成，现在我们来分析其基本结构和实现方法。</p>
+<h4 id="1-模式的结构"><a href="#1-模式的结构" class="headerlink" title="1. 模式的结构"></a>1. 模式的结构</h4><p>建造者（Builder）模式的主要角色如下。</p>
+<ol>
+<li>产品角色（Product）：它是包含多个组成部件的复杂对象，由具体建造者来创建其各个零部件。</li>
+<li>抽象建造者（Builder）：它是一个包含创建产品各个子部件的抽象方法的接口，通常还包含一个返回复杂产品的方法 getResult()。</li>
+<li>具体建造者(Concrete Builder）：实现 Builder 接口，完成复杂产品的各个部件的具体创建方法。</li>
+<li>指挥者（Director）：它调用建造者对象中的部件构造与装配方法完成复杂对象的创建，在指挥者中不涉及具体产品的信息。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/markdown/builder.png" srcset="https://cdn.jsdelivr.net/gh/smooklazz/cdn@master/img/loading.gif" lazyload alt="image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></div></td><td class="code"><pre><code class="hljs java">(<span class="hljs-number">1</span>) 产品角色：包含多个组成部件的复杂对象。<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Product</span> &#123;<br>    <span class="hljs-keyword">private</span> String partA;<br>    <span class="hljs-keyword">private</span> String partB;<br>    <span class="hljs-keyword">private</span> String partC;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setPartA</span><span class="hljs-params">(String partA)</span> &#123;<br>        <span class="hljs-built_in">this</span>.partA = partA;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setPartB</span><span class="hljs-params">(String partB)</span> &#123;<br>        <span class="hljs-built_in">this</span>.partB = partB;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setPartC</span><span class="hljs-params">(String partC)</span> &#123;<br>        <span class="hljs-built_in">this</span>.partC = partC;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">show</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//显示产品的特性</span><br>    &#125;<br>&#125;<br><br>(<span class="hljs-number">2</span>) 抽象建造者：包含创建产品各个子部件的抽象方法。<br><br><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Builder</span> &#123;<br>    <span class="hljs-comment">//创建产品对象</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-type">Product</span> <span class="hljs-variable">product</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Product</span>();<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buildPartA</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buildPartB</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buildPartC</span><span class="hljs-params">()</span>;<br>    <span class="hljs-comment">//返回产品对象</span><br>    <span class="hljs-keyword">public</span> Product <span class="hljs-title function_">getResult</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> product;<br>    &#125;<br>&#125;<br><br>(<span class="hljs-number">3</span>) 具体建造者：实现了抽象建造者接口。<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteBuilder</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Builder</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buildPartA</span><span class="hljs-params">()</span> &#123;<br>        product.setPartA(<span class="hljs-string">&quot;建造 PartA&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buildPartB</span><span class="hljs-params">()</span> &#123;<br>        product.setPartB(<span class="hljs-string">&quot;建造 PartB&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buildPartC</span><span class="hljs-params">()</span> &#123;<br>        product.setPartC(<span class="hljs-string">&quot;建造 PartC&quot;</span>);<br>    &#125;<br>&#125;<br><br>(<span class="hljs-number">4</span>) 指挥者：调用建造者中的方法完成复杂对象的创建。<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Director</span> &#123;<br>    <span class="hljs-keyword">private</span> Builder builder;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Director</span><span class="hljs-params">(Builder builder)</span> &#123;<br>        <span class="hljs-built_in">this</span>.builder = builder;<br>    &#125;<br>    <span class="hljs-comment">//产品构建与组装方法</span><br>    <span class="hljs-keyword">public</span> Product <span class="hljs-title function_">construct</span><span class="hljs-params">()</span> &#123;<br>        builder.buildPartA();<br>        builder.buildPartB();<br>        builder.buildPartC();<br>        <span class="hljs-keyword">return</span> builder.getResult();<br>    &#125;<br>&#125;<br><br>(<span class="hljs-number">5</span>) 客户类。<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Client</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">Builder</span> <span class="hljs-variable">builder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConcreteBuilder</span>();<br>        <span class="hljs-type">Director</span> <span class="hljs-variable">director</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Director</span>(builder);<br>        <span class="hljs-type">Product</span> <span class="hljs-variable">product</span> <span class="hljs-operator">=</span> director.construct();<br>        product.show();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
             </div>
             <hr>
             <div>
@@ -293,9 +310,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/10/01/UV/">
+                      <a href="/2021/10/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">清楚！理解“UV、IP和PV＂的定义！</span>
+                        <span class="hidden-mobile">原型模式</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -303,8 +320,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/06/01/Java%E5%AE%9E%E7%8E%B0%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-                        <span class="hidden-mobile">Java实现滑动窗口</span>
+                      <a href="/2021/10/01/UV/">
+                        <span class="hidden-mobile">清楚！理解“UV、IP和PV＂的定义！</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -329,7 +346,7 @@
         var options = Object.assign(
           {"clientID":"163e37e111f27efff5e4","clientSecret":"c8633b0fe56f61efb2d34e60c32bc363af83e6be","repo":"comment","owner":"smooklazz","admin":["smooklazz"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: 'e13c2133d784b8c5758cab7f3d7db69e'
+            id: '7407974996785c8ef95214160587da12'
           }
         )
         var gitalk = new Gitalk(options);
